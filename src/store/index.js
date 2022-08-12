@@ -6,6 +6,7 @@ import database from 'models/Database'
 import axios from 'axios';
 import VuexORMAxios from '@vuex-orm/plugin-axios'
 import VuexORMRestPlugin from 'store/VuexORMRestPlugin';
+import CustomAdapter from 'store/custom-adapter';
 
 // import example from './module-example'
 
@@ -22,7 +23,14 @@ import VuexORMRestPlugin from 'store/VuexORMRestPlugin';
   --routing-url http://products.prod.svc.cluster.local:4001/graphql
  */
 
-VuexORM.use(VuexORMGraphQL, { database:database, url: 'http://localhost:5000/graphql'})
+VuexORM.use(
+  VuexORMGraphQL, 
+  { 
+    database:database, 
+    url: 'http://localhost:3000/graphql', 
+    adapter: new CustomAdapter()
+  }
+)
 
 export default store(function (/* { ssrContext } */) {
   const Store = createStore({
@@ -40,10 +48,10 @@ export default store(function (/* { ssrContext } */) {
 
   // VuexORM.use(VuexORMRestPlugin)
   // VuexORM.use(VuexORMGraphQL, { database })
-  VuexORM.use(VuexORMAxios, {
-    axios,
-    baseURL: 'http://localhost:5000/graphql'
-  })
+  // VuexORM.use(VuexORMAxios, {
+  //   axios,
+  //   baseURL: 'http://localhost:3000/graphql'
+  // })
 
   return Store
 })

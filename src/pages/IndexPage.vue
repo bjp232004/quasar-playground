@@ -24,27 +24,25 @@ export default {
     /**
      * Returns all users with reactivity.
      */
-    // posts: () => Post.query().withAll().all()
-    getPosts: () => Post.query(`{
-        Post(id: 1) {
-          id
-          title
-          body
-        }
-      }`).withAll().all().then(response => {
-      console.log(response)
-    })
+    // posts: () => Post.query()
+    // getPosts: () => Post.query().withAll().all().then(response => {
+    //   console.log(response)
+    // })
   },
   async mounted() {
-    await Post.fetch();
-    // this.getPost();
+    await Post.fetch().then(response => {
+      console.log(response.posts);
+      this.posts = response.posts;
+    });
+    // await this.getPost();
   },
   methods: {
-    async getPost() {
-      await Post.query()
-      .then(response => {
-        console.log(response)
-      })
+    // async getPost() {
+    //   await Post.query()
+    //   .then(response => {
+    //     console.log(response)
+    //   })
+    // }
       // // Post.$get()
       // // await Post.api().get('posts')
       // await Post.query().with('author').all()
@@ -54,7 +52,7 @@ export default {
       //   // this.posts=response.data
       //   console.log("this.posts", this.posts)
       // }) 
-    }
+    
   }
   ,
   data() {
